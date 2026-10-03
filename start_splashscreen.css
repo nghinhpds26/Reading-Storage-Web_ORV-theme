@@ -75,7 +75,7 @@
 }
 
 #splash-screen.active .decor-clock {
-  animation: revealMoonArc 6s linear forwards;
+  animation: revealMoonArc 8s linear forwards;
 }
 
 @keyframes revealMoonArc {
