@@ -38,43 +38,49 @@
                 <div id="progress-bar-fill"></div>
             </div>
         </div>
-
     </div>
 
-    <div main="main-content">
+    <div id="main-content">
         <h1>HI</h1>
     </div>
 
     <script>
+        const splashScreen = document.getElementById('splash-screen');
+        const mainContent = document.getElementById('main-content');
+        const percentText = document.getElementById('progress-percent-text');
+        const progressFill = document.getElementById('progress-bar-fill');
+
         window.addEventListener('load', () => {
-            const splashScreen = document.getElementById('splash-screen');
-            if (splash) {
-            splash.classList.add('active'); // Bắt đầu chạy animation 6s mượt mà
+            if (splashScreen) {
+                splashScreen.classList.add('active');
             }
         });
 
-        const percentText = document.getElementById('progress-percent-text');
-        const progressFill = document.getElementById('progress-bar-fill');
-        
         let currentProgress = 0;
-
         const timer = setInterval(() => {
             currentProgress++;
-            percentText.innerText = currentProgress + '%';
-            progressFill.style.width = currentProgress + '%';
+            if (percentText) percentText.innerText = currentProgress + '%';
+            if (progressFill) progressFill.style.width = currentProgress + '%';
+            
             if (currentProgress >= 100) {
                 clearInterval(timer);
                 hide_splash_screen();
             }
-        }, 35)
+        }, 35);
 
         function hide_splash_screen() {
-            splashScreen.style.opacity = '0'
-            setTimeout(() => {
-                splashScreen.style.display = 'none';
-            }, 500)
+            if (splashScreen) {
+                splashScreen.style.transition = 'opacity 0.5s ease';
+                splashScreen.style.opacity = '0';
+                
+                setTimeout(() => {
+                    splashScreen.style.display = 'none';
+                    if (mainContent) {
+                        mainContent.style.display = 'block';
+                    }
+                }, 500);
+            }
         }
-
     </script>
 </body>
 </html>
