@@ -9,6 +9,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:wght@600&family=MedievalSharp&display=swap" rel="stylesheet">
+    <link rel="preload" href="database/clock-face.png" as="image">
+    <link rel="preload" href="database/moon-decor.png" as="image">
+    <link rel="preload" href="database/min-hand.png" as="image">
+    <link rel="preload" href="database/hour-hand.png" as="image">
+    <link rel="preload" href="database/bg-decor.jpg" as="image">
+    <link rel="preload" href="database/bg-decor (2).jpg" as="image">
     <link rel="stylesheet" href="start_splashscreen.css">
 </head>
 
@@ -40,7 +46,13 @@
     </div>
 
     <script>
-        const splashScreen = document.getElementById('splash-screen');
+        window.addEventListener('load', () => {
+            const splashScreen = document.getElementById('splash-screen');
+            if (splash) {
+            splash.classList.add('active'); // Bắt đầu chạy animation 6s mượt mà
+            }
+        });
+
         const percentText = document.getElementById('progress-percent-text');
         const progressFill = document.getElementById('progress-bar-fill');
         
