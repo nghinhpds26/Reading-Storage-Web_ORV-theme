@@ -1,149 +1,86 @@
-#splash-screen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: black;
-  z-index: 9999;
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>ORV Reading Storage Library</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:wght@600&family=MedievalSharp&display=swap" rel="stylesheet">
+    <link rel="preload" href="database/clock-face.png" as="image">
+    <link rel="preload" href="database/moon-decor.png" as="image">
+    <link rel="preload" href="database/min-hand.png" as="image">
+    <link rel="preload" href="database/hour-hand.png" as="image">
+    <link rel="preload" href="database/bg-decor.jpg" as="image">
+    <link rel="preload" href="database/bg-decor (2).jpg" as="image">
+    <link rel="stylesheet" href="start_splashscreen.css">
+</head>
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  transition: opacity 0.4s ease;
-}
+<body>
+    <div id="splash-screen">
+        <img class="decor-corner br" src="database/bg-decor.jpg">
+        <img class="decor-corner tr" src="database/bg-decor (2).jpg">
+        <img class="decor-corner tl" src="database/bg-decor.jpg">
+        <img class="decor-corner bl" src="database/bg-decor (2).jpg">
+        <div class="clock-box">
+            <img src="database/clock-face.png">
+            <div id="clock-face">
+                <img src="database/min-hand.png">
+                <img src="database/hour-hand.png">
+            </div>
+            <div class="decor-clock">
+                <img src="database/moon-decor.png">
+            </div>
+            <div id="progress-percent-text"></div>
+            <div class="progress-bar-bg">
+                <div id="progress-bar-fill"></div>
+            </div>
+        </div>
+    </div>
 
-.decor-corner {
-    position: absolute;
-    filter: invert(100%);
-    max-width: 30vw;
-    height: auto;
-}
-.br {
-    bottom: 0;
-    right: 0;
-}
-.tr {
-    top: 0;
-    right: 0;
-    opacity: 0.7;
-    rotate: 90deg;
-}
-.bl {
-    bottom: 0;
-    left: 0;
-    opacity: 0.7;
-    rotate: -90deg;
-}
-.tl {
-    top: 0;
-    left: 0;
-    rotate: 180deg;
-}
+    <div id="main-content">
+        <h1>HI</h1>
+    </div>
 
-.clock-box {
-  position: relative;
-  width: 400px;
-  max-width: 80vw;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+    <script>
+        const splashScreen = document.getElementById('splash-screen');
+        const mainContent = document.getElementById('main-content');
+        const percentText = document.getElementById('progress-percent-text');
+        const progressFill = document.getElementById('progress-bar-fill');
 
-@property --mask-size {
-  syntax: '<percentage>';
-  inherits: false;
-  initial-value: 0%;
-}
+        window.addEventListener('load', () => {
+            if (splashScreen) {
+                splashScreen.classList.add('active');
+            }
+        });
 
-.decor-clock {
-  position: absolute;
-  top: -15vh;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 120%;
-  max-width: 450px;
-  
-  filter: invert(100%);
-  opacity: 0.8;
+        let currentProgress = 0;
+        const timer = setInterval(() => {
+            currentProgress++;
+            if (percentText) percentText.innerText = currentProgress + '%';
+            if (progressFill) progressFill.style.width = currentProgress + '%';
+            
+            if (currentProgress >= 100) {
+                clearInterval(timer);
+                hide_splash_screen();
+            }
+        }, 35);
 
-  -webkit-mask-image: radial-gradient(circle at 50% 18%, #000 var(--mask-size), transparent var(--mask-size));
-  mask-image: radial-gradient(circle at 50% 18%, #000 var(--mask-size), transparent var(--mask-size));
-  animation: none;
-}
-
-#splash-screen.active .decor-clock {
-  animation: revealMoonArc 9s linear forwards;
-}
-
-@keyframes revealMoonArc {
-  from {
-    --mask-size: 0%;
-  }
-  to {
-    --mask-size: 200%;
-  }
-}
-
-.clock-box img {
-  width: 100%; 
-  height: auto;
-  display: block;
-}
-
-#clock-face {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-#clock-face img {
-  position: absolute;
-  top: 45%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  max-width: 100%;
-  height: auto;
-}
-
-#clock-face img:nth-child(1) {
-  animation: spin 2s linear infinite;
-}
-
-#clock-face img:nth-child(2) {
-  animation: spin 6s linear infinite;
-}
-
-@keyframes spin {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-#progress-percent-text {
-  font-family: 'Cinzel Decorative', 'Cormorant Garamond';
-  font-size: 1.2rem;
-  color: white;
-  letter-spacing: 2px;
-  margin-top: 15px;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-}
-
-.progress-bar-bg {
-  width: 100%;
-  height: 6px;
-  background-color: #313336;
-  border-radius: 10px;
-  margin-top: 10px;
-  overflow: hidden;
-}
-
-#progress-bar-fill {
-  width: 0%;
-  height: 100%;
-  background: linear-gradient(90deg, black, white);
-}
+        function hide_splash_screen() {
+            if (splashScreen) {
+                splashScreen.style.transition = 'opacity 0.5s ease';
+                splashScreen.style.opacity = '0';
+                
+                setTimeout(() => {
+                    splashScreen.style.display = 'none';
+                    if (mainContent) {
+                        mainContent.style.display = 'block';
+                    }
+                }, 500);
+            }
+        }
+    </script>
+</body>
+</html>
