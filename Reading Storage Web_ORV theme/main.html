@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>ORV Reading Storage Library</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:wght@600&family=MedievalSharp&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="start_splashscreen.css">
+</head>
+
+<body>
+    <div id="splash-screen">
+        <img class="decor-corner br" src="database\bg-decor.jpg">
+        <img class="decor-corner tr" src="database\bg-decor (2).jpg">
+        <img class="decor-corner tl" src="database\bg-decor.jpg">
+        <img class="decor-corner bl" src="database\bg-decor (2).jpg">
+        <div class="clock-box">
+            <img src="database\clock-face.png">
+            <div id="clock-face">
+                <img src="database\min-hand.png">
+                <img src="database\hour-hand.png">
+            </div>
+            <div class="decor-clock">
+                <img src="database\moon-decor.png">
+            </div>
+            <div id="progress-percent-text"></div>
+            <div class="progress-bar-bg">
+                <div id="progress-bar-fill"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div main="main-content">
+        <h1>HI</h1>
+    </div>
+
+    <script>
+        const splashScreen = document.getElementById('splash-screen');
+        const percentText = document.getElementById('progress-percent-text');
+        const progressFill = document.getElementById('progress-bar-fill');
+        
+        let currentProgress = 0;
+
+        const timer = setInterval(() => {
+            currentProgress++;
+            percentText.innerText = currentProgress + '%';
+            progressFill.style.width = currentProgress + '%';
+            if (currentProgress >= 100) {
+                clearInterval(timer);
+                hide_splash_screen();
+            }
+        }, 35)
+
+        function hide_splash_screen() {
+            splashScreen.style.opacity = '0'
+            setTimeout(() => {
+                splashScreen.style.display = 'none';
+            }, 500)
+        }
+
+    </script>
+</body>
+</html>
