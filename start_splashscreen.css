@@ -71,7 +71,11 @@
 
   -webkit-mask-image: radial-gradient(circle at 50% 18%, #000 var(--mask-size), transparent var(--mask-size));
   mask-image: radial-gradient(circle at 50% 18%, #000 var(--mask-size), transparent var(--mask-size));
-  animation: revealMoonArc 8s linear forwards;
+  animation: none;
+}
+
+#splash-screen.active .decor-clock {
+  animation: revealMoonArc 6s linear forwards;
 }
 
 @keyframes revealMoonArc {
