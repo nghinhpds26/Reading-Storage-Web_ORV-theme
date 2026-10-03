@@ -9,21 +9,23 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:wght@600&family=MedievalSharp&display=swap" rel="stylesheet">
+    
+    <!-- Lưu ý: Nhớ đổi tên file bg-decor (2).jpg thành bg-decor-2.jpg trong thư mục database -->
     <link rel="preload" href="database/clock-face.png" as="image">
     <link rel="preload" href="database/moon-decor.png" as="image">
     <link rel="preload" href="database/min-hand.png" as="image">
     <link rel="preload" href="database/hour-hand.png" as="image">
     <link rel="preload" href="database/bg-decor.jpg" as="image">
-    <link rel="preload" href="database/bg-decor (2).jpg" as="image">
+    <link rel="preload" href="database/bg-decor-2.jpg" as="image">
     <link rel="stylesheet" href="start_splashscreen.css">
 </head>
 
 <body>
     <div id="splash-screen">
         <img class="decor-corner br" src="database/bg-decor.jpg">
-        <img class="decor-corner tr" src="database/bg-decor (2).jpg">
+        <img class="decor-corner tr" src="database/bg-decor-2.jpg">
         <img class="decor-corner tl" src="database/bg-decor.jpg">
-        <img class="decor-corner bl" src="database/bg-decor (2).jpg">
+        <img class="decor-corner bl" src="database/bg-decor-2.jpg">
         <div class="clock-box">
             <img src="database/clock-face.png">
             <div id="clock-face">
@@ -33,7 +35,7 @@
             <div class="decor-clock">
                 <img src="database/moon-decor.png">
             </div>
-            <div id="progress-percent-text"></div>
+            <div id="progress-percent-text">0%</div>
             <div class="progress-bar-bg">
                 <div id="progress-bar-fill"></div>
             </div>
@@ -45,127 +47,45 @@
     </div>
 
     <script>
-        const splashScreen = document.getElementById('splash-screen');
-        const mainContent = document.getElementById('main-content');
-        const percentText = document.getElementById('progress-percent-text');
-        const progressFill = document.getElementById('progress-bar-fill');
-
+        // CHỈ CHẠY ANIMATION VÀ ĐẾM % KHI TẤT CẢ TÀI NGUYÊN (ẢNH/CSS) ĐÃ TẢI XONG VỀ MÁY
         window.addEventListener('load', () => {
+            const splashScreen = document.getElementById('splash-screen');
+            const mainContent = document.getElementById('main-content');
+            const percentText = document.getElementById('progress-percent-text');
+            const progressFill = document.getElementById('progress-bar-fill');
+
+            // 1. Kích hoạt hiệu ứng CSS mặt trăng
             if (splashScreen) {
                 splashScreen.classList.add('active');
             }
-        });
 
-        let currentProgress = 0;
-        const timer = setInterval(() => {
-            currentProgress++;
-            if (percentText) percentText.innerText = currentProgress + '%';
-            if (progressFill) progressFill.style.width = currentProgress + '%';
-            
-            if (currentProgress >= 100) {
-                clearInterval(timer);
-                hide_splash_screen();
-            }
-        }, 35);
-
-        function hide_splash_screen() {
-            if (splashScreen) {
-                splashScreen.style.transition = 'opacity 0.5s ease';
-                splashScreen.style.opacity = '0';
+            // 2. Bắt đầu chạy đếm từ 0% -> 100% (60ms * 100 step = 6 giây)
+            let currentProgress = 0;
+            const timer = setInterval(() => {
+                currentProgress++;
+                if (percentText) percentText.innerText = currentProgress + '%';
+                if (progressFill) progressFill.style.width = currentProgress + '%';
                 
-                setTimeout(() => {
-                    splashScreen.style.display = 'none';
-                    if (mainContent) {
-                        mainContent.style.display = 'block';
-                    }
-                }, 500);
-            }
-        }
-    </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>ORV Reading Storage Library</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:wght@600&family=MedievalSharp&display=swap" rel="stylesheet">
-    <link rel="preload" href="database/clock-face.png" as="image">
-    <link rel="preload" href="database/moon-decor.png" as="image">
-    <link rel="preload" href="database/min-hand.png" as="image">
-    <link rel="preload" href="database/hour-hand.png" as="image">
-    <link rel="preload" href="database/bg-decor.jpg" as="image">
-    <link rel="preload" href="database/bg-decor (2).jpg" as="image">
-    <link rel="stylesheet" href="start_splashscreen.css">
-</head>
+                if (currentProgress >= 100) {
+                    clearInterval(timer);
+                    hide_splash_screen();
+                }
+            }, 60);
 
-<body>
-    <div id="splash-screen">
-        <img class="decor-corner br" src="database/bg-decor.jpg">
-        <img class="decor-corner tr" src="database/bg-decor (2).jpg">
-        <img class="decor-corner tl" src="database/bg-decor.jpg">
-        <img class="decor-corner bl" src="database/bg-decor (2).jpg">
-        <div class="clock-box">
-            <img src="database/clock-face.png">
-            <div id="clock-face">
-                <img src="database/min-hand.png">
-                <img src="database/hour-hand.png">
-            </div>
-            <div class="decor-clock">
-                <img src="database/moon-decor.png">
-            </div>
-            <div id="progress-percent-text"></div>
-            <div class="progress-bar-bg">
-                <div id="progress-bar-fill"></div>
-            </div>
-        </div>
-    </div>
-
-    <div id="main-content">
-        <h1>HI</h1>
-    </div>
-
-    <script>
-        const splashScreen = document.getElementById('splash-screen');
-        const mainContent = document.getElementById('main-content');
-        const percentText = document.getElementById('progress-percent-text');
-        const progressFill = document.getElementById('progress-bar-fill');
-
-        window.addEventListener('load', () => {
-            if (splashScreen) {
-                splashScreen.classList.add('active');
+            function hide_splash_screen() {
+                if (splashScreen) {
+                    splashScreen.style.transition = 'opacity 0.8s ease';
+                    splashScreen.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        splashScreen.style.display = 'none';
+                        if (mainContent) {
+                            mainContent.style.display = 'block';
+                        }
+                    }, 800);
+                }
             }
         });
-
-        let currentProgress = 0;
-        const timer = setInterval(() => {
-            currentProgress++;
-            if (percentText) percentText.innerText = currentProgress + '%';
-            if (progressFill) progressFill.style.width = currentProgress + '%';
-            
-            if (currentProgress >= 100) {
-                clearInterval(timer);
-                hide_splash_screen();
-            }
-        }, 35);
-
-        function hide_splash_screen() {
-            if (splashScreen) {
-                splashScreen.style.transition = 'opacity 0.5s ease';
-                splashScreen.style.opacity = '0';
-                
-                setTimeout(() => {
-                    splashScreen.style.display = 'none';
-                    if (mainContent) {
-                        mainContent.style.display = 'block';
-                    }
-                }, 500);
-            }
-        }
     </script>
 </body>
 </html>
